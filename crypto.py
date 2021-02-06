@@ -73,7 +73,7 @@ def main():
         jsonMessage = json.loads(message)
         # pprint.pprint(jsonMessage)
         candle = jsonMessage['k']
-        isCandleClosed = candle['x']
+        # isCandleClosed = candle['x']
         isCandleClosed = True
         close = candle['c']
 
