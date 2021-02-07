@@ -5,27 +5,10 @@ import talib
 import numpy
 from datetime import date
 # import config
-# from binance.client import Client
-# from binance.enums import *
 from crypto import Crypto
+from strategies import RsiBasic, RsiParabolic
 
 SOCKET = "wss://stream.binance.com:9443/ws/ethusdt@kline_1m"
-
-# TRADE_SYMBOL = 'ETHUSD'
-# TRADE_QUANTITY = 0.05
-
-# client = Client(config.API_KEY, config.API_SECRET, tld='us')
-
-# def order(side, quantity, symbol, order_type=ORDER_TYPE_MARKET):
-#     try:
-#         print("sending order")
-#         # order = client.create_order(symbol=symbol, side=side, type=order_type, quantity=quantity)
-#         print(order)
-#     except Exception as e:
-#         print("an exception occured - {}".format(e))
-#         return False
-
-#     return True
 
 
 def main():
@@ -51,27 +34,7 @@ def main():
             position = crypto.getPosition()
             crypto.addClose(float(close))
 
-            if len(closes) > crypto.getRsiPeriod():
-                npCloses = numpy.array(closes)
-                rsi = talib.RSI(npCloses, crypto.getRsiPeriod())
-                lastRSI = rsi[-1]
-                print("RSI: " + str(lastRSI))
-
-                if lastRSI > crypto.getRsiMax() and position:
-                    crypto.setPosition(False)
-                    crypto.sell(float(close))
-                    f = open('./logs/{}.txt'.format(date.today()), "a+")
-                    f.write("S " + close + " " +
-                            str(crypto.getBalance()) + "\n")
-                    f.close()
-
-                if lastRSI < crypto.getRsiMin() and not position:
-                    crypto.setPosition(True)
-                    crypto.buy(float(close))
-                    f = open('./logs/{}.txt'.format(date.today()), "a+")
-                    f.write("B " + close + " " +
-                            str(crypto.getBalance()) + "\n")
-                    f.close()
+            RsiBasic(float(close))
 
     ws = websocket.WebSocketApp(SOCKET,
                                 on_open=onOpen,

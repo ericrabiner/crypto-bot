@@ -12,8 +12,11 @@ data = numpy.genfromtxt(
 closePrices = data[:, 4]
 
 crypto = Crypto()
-RsiBasic(crypto, closePrices)
-# RsiParabolic(crypto, closePrices)
+for close in closePrices:
+    crypto.addClose(float(close))
+    RsiBasic(crypto, close)
+    # RsiParabolic(crypto, close)
+
 
 # If still in position, sell.
 if (crypto.position):
