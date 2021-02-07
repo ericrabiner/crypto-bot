@@ -19,8 +19,8 @@ closePrices = data[:, 4]
 crypto = Crypto()
 for close in closePrices:
     crypto.addClose(float(close))
-    RsiBasic(crypto, close)
-    # RsiParabolic(crypto, close)
+    # RsiBasic(crypto, close)
+    RsiParabolic(crypto, close)
 
 
 # If still in position, sell.

@@ -59,6 +59,7 @@ def RsiParabolic(crypto, close, write=False):
 
         if crypto.belowRsiMin and lastRSI > crypto.rsiMin and not crypto.position:
             crypto.setPosition(True)
+            crypto.setBelowRsiMin(False)
             crypto.buy(float(close))
 
             if write:
