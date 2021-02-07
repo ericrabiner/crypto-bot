@@ -3,6 +3,7 @@ import json
 import pprint
 import talib
 import numpy
+from datetime import date
 # import config
 # from binance.client import Client
 # from binance.enums import *
@@ -10,9 +11,6 @@ from crypto import Crypto
 
 SOCKET = "wss://stream.binance.com:9443/ws/ethusdt@kline_1m"
 
-RSI_PERIOD = 14
-RSI_OVERBOUGHT = 70
-RSI_OVERSOLD = 30
 # TRADE_SYMBOL = 'ETHUSD'
 # TRADE_QUANTITY = 0.05
 
@@ -32,7 +30,7 @@ RSI_OVERSOLD = 30
 
 def main():
 
-    crypto = Crypto()
+    crypto = Crypto(60, 40)
 
     def onOpen(ws):
         print('opened connection')
@@ -53,24 +51,24 @@ def main():
             position = crypto.getPosition()
             crypto.append(float(close))
 
-            if len(closes) > RSI_PERIOD:
+            if len(closes) > crypto.getRsiPeriod():
                 npCloses = numpy.array(closes)
-                rsi = talib.RSI(npCloses, RSI_PERIOD)
+                rsi = talib.RSI(npCloses, crypto.getRsiPeriod())
                 lastRSI = rsi[-1]
                 print("RSI: " + str(lastRSI))
 
-                if lastRSI > RSI_OVERBOUGHT and position:
+                if lastRSI > crypto.getRsiMax() and position:
                     crypto.setPosition(False)
                     crypto.sell(float(close))
-                    f = open("log2.txt", "a")
+                    f = open('./logs/{}.txt'.format(date.today()), "a+")
                     f.write("S " + close + " " +
                             str(crypto.getBalance()) + "\n")
                     f.close()
 
-                if lastRSI < RSI_OVERSOLD and not position:
+                if lastRSI < crypto.getRsiMin() and not position:
                     crypto.setPosition(True)
                     crypto.buy(float(close))
-                    f = open("log2.txt", "a")
+                    f = open('./logs/{}.txt'.format(date.today()), "a+")
                     f.write("B " + close + " " +
                             str(crypto.getBalance()) + "\n")
                     f.close()

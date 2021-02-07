@@ -14,6 +14,9 @@ Strategy 2 - todo:
 Buy: if 1st RSI < 30 & 2nd RSI > 30 (parabola)
 Sell: if RSI > 70
 
-## Todo
+## Logs
 
-Setup backtesting
+TYPE PRICE BALANCE
+
+B = BUY
+S = SELL
