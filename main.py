@@ -30,11 +30,8 @@ def main():
         close = candle['c']
 
         if isCandleClosed:
-            closes = crypto.getCloses()
-            position = crypto.getPosition()
             crypto.addClose(float(close))
-
-            RsiBasic(float(close))
+            RsiBasic(crypto, float(close))
 
     ws = websocket.WebSocketApp(SOCKET,
                                 on_open=onOpen,
