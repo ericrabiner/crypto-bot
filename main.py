@@ -73,8 +73,8 @@ def main():
         jsonMessage = json.loads(message)
         # pprint.pprint(jsonMessage)
         candle = jsonMessage['k']
-        # isCandleClosed = candle['x']
-        isCandleClosed = True
+        isCandleClosed = candle['x']
+        # isCandleClosed = True
         close = candle['c']
 
         if isCandleClosed:
@@ -91,7 +91,7 @@ def main():
                 if lastRSI > RSI_OVERBOUGHT and position:
                     crypto.setPosition(False)
                     crypto.sell(float(close))
-                    f = open("log.txt", "a")
+                    f = open("log2.txt", "a")
                     f.write("S " + close + " " +
                             str(crypto.getBalance()) + "\n")
                     f.close()
@@ -99,7 +99,7 @@ def main():
                 if lastRSI < RSI_OVERSOLD and not position:
                     crypto.setPosition(True)
                     crypto.buy(float(close))
-                    f = open("log.txt", "a")
+                    f = open("log2.txt", "a")
                     f.write("B " + close + " " +
                             str(crypto.getBalance()) + "\n")
                     f.close()
