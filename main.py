@@ -49,7 +49,7 @@ def main():
         if isCandleClosed:
             closes = crypto.getCloses()
             position = crypto.getPosition()
-            crypto.append(float(close))
+            crypto.addClose(float(close))
 
             if len(closes) > crypto.getRsiPeriod():
                 npCloses = numpy.array(closes)

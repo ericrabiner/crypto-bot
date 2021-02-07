@@ -1,6 +1,7 @@
 class Crypto():
     def __init__(self, rsiMax=70, rsiMin=30, rsiPeriod=14):
-        self.balance = 10000.00
+        self.balance = 129.02
+        self.startBalance = self.balance
         self.position = False
         self.closes = []
 
@@ -17,6 +18,9 @@ class Crypto():
     def getBalance(self):
         return self.balance
 
+    def getStartBalance(self):
+        return self.startBalance
+
     def getPosition(self):
         return self.position
 
@@ -26,7 +30,9 @@ class Crypto():
     def getCloses(self):
         return self.closes
 
-    def append(self, newClose):
+    def addClose(self, newClose):
+        if (len(self.closes) > 14):
+            self.closes.pop(0)
         self.closes.append(newClose)
 
     def getRsiPeriod(self):
