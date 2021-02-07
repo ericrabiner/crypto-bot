@@ -10,11 +10,19 @@ class Crypto():
         self.rsiMax = rsiMax
         self.rsiMin = rsiMin
 
+        self.binanceFee = 0.001
+        self.numTrades = 0
+        self.tradeCost = 0
+
     def buy(self, amount):
         self.balance -= amount
+        self.numTrades += 1
+        self.tradeCost += amount * self.binanceFee
 
     def sell(self, amount):
         self.balance += amount
+        self.numTrades += 1
+        self.tradeCost += amount * self.binanceFee
 
     def setPosition(self, newPos):
         self.position = newPos

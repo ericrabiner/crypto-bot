@@ -18,7 +18,7 @@ def RsiBasic(crypto, close, write=False):
             crypto.sell(float(close))
 
             if write:
-                f = open('./logs/{}_backtest.txt'.format(date.today()), "a+")
+                f = open('./logs/{}.txt'.format(date.today()), "a+")
                 f.write("S " + str(close) + " " +
                         str(crypto.balance) + "\n")
                 f.close()
@@ -28,7 +28,7 @@ def RsiBasic(crypto, close, write=False):
             crypto.buy(float(close))
 
             if write:
-                f = open('./logs/{}_backtest.txt'.format(date.today()), "a+")
+                f = open('./logs/{}.txt'.format(date.today()), "a+")
                 f.write("B " + str(close) + " " +
                         str(crypto.balance) + "\n")
                 f.close()
