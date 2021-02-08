@@ -11,16 +11,20 @@ def calcGain(start, end):
 # data = numpy.genfromtxt(
 #     './historical/2020_01_01-2021-02-07.csv', delimiter=',')
 
-data = numpy.genfromtxt(
-    './historical/2020_01_01-2020-02-01.csv', delimiter=',')
+# data = numpy.genfromtxt(
+#     './historical/2020_01_01-2020-02-01.csv', delimiter=',')
+
+# data = numpy.genfromtxt('./historical/1month30min.csv', delimiter=',')
+data = numpy.genfromtxt('./historical/1month5min.csv', delimiter=',')
+
 
 closePrices = data[:, 4]
 
 crypto = Crypto()
 for close in closePrices:
     crypto.addClose(float(close))
-    # RsiBasic(crypto, close)
-    RsiParabolic(crypto, close)
+    RsiBasic(crypto, close)
+    # RsiParabolic(crypto, close)
 
 
 # If still in position, sell.

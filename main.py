@@ -1,6 +1,5 @@
 import websocket
 import json
-import pprint
 import talib
 import numpy
 from datetime import date
